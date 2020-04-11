@@ -95,8 +95,8 @@ def create_note(request):
 def publish_note(request, note_uuid):
     note = get_object_or_404(Note, uuid=note_uuid)
     context = {
-        "note": note.header,
-        "body":note.body,
-        "category":note.category
+        "note": note,
     }
-    return HttpResponse(context)
+    template = loader.get_template('notekeeper/publish.html')
+    return HttpResponse(template.render(context, request))
+

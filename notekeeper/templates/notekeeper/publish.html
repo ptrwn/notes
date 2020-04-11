@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+    <h1>{{ note.header }}</h1>
+    <p>{{ note.body }}</p>
+    <div>
+        <span>Is favorite: {{ note.is_favorite }}</span>
+    </div>
+    <div>
+        <span>Author: {{ note.created_by }}</span>
+    </div>
+    <div>
+        <span>Created on: {{ note.created_on }}</span>
+    </div>
+</body>
+</html>
