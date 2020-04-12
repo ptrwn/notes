@@ -100,3 +100,11 @@ def publish_note(request, note_uuid):
     template = loader.get_template('notekeeper/publish.html')
     return HttpResponse(template.render(context, request))
 
+
+def login():
+    pass
+
+
+def registration():
+    pass
+

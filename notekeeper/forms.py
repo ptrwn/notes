@@ -6,3 +6,7 @@ class NoteForm(ModelForm):
     class Meta:
         model = Note
         fields = ['header', 'body', 'is_favorite', 'category']
+
+class RegLogForm(ModelForm):
+    class Meta:
+        pass
