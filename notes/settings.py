@@ -130,3 +130,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+LOGIN_REDIRECT_URL = '/notekeeper'
+#LOGIN_URL='/auth/login/'
+#LOGOUT_REDIRECT_URL = ''

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{% block title %}Notekeeper{% endblock %}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div id="sidebar">
+        {% block sidebar %}
+        <ul>
+            <li>
+            {% if user.is_authenticated %}
+            You are logged in as {{ user }}.
+            <a href="/accounts/logout/">Click here to log out.</a>
+            {% else %}
+            You are not logged in.
+            <a href="/accounts/login/">Click here to log in.</a>
+            {% endif %}
+            </li>
+            <li><a href="{% url 'notekeeper:index' %}">My notes</a></li>
+
+        </ul>
+        {% endblock %}
+    </div>
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+
+</body>
+</html>

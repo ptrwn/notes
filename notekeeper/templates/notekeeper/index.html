@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-</head>
-<body>
+{% extends 'notekeeper/base.html' %}
+
+{% block title %}My notes - {{ block.super }}{% endblock %}
+
+{% block content %}
     {% if latest_note_list %}
     <ul>
     {% for note in latest_note_list %}
@@ -21,6 +18,4 @@
         <input type="hidden" name="note_id" value="{{ note.id }}">
         <button type="submit">NEW NOTE</button>
     </form>
-
-</body>
-</html>
+{% endblock content %}

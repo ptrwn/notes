@@ -1,26 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-</head>
-<body>
-    {% if latest_note_list %}
-    <ul>
-    {% for note in latest_note_list %}
-        <li><a href="{% url 'notekeeper:note_details' note.id %}">{{ note.header }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>Sorry Mario notes are in another castle.</p>
-{% endif %}
+{% extends 'notekeeper/base.html' %}
 
-    <form method="post" action="{% url 'notekeeper:create_note' %}" >
-        {% csrf_token %}
-        <input type="hidden" name="note_id" value="{{ note.id }}">
-        <button type="submit">NEW NOTE</button>
-    </form>
+{% block content %}
 
-</body>
-</html>
+{% endblock content %}

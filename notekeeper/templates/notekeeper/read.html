@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-</head>
-<body>
+{% extends 'notekeeper/base.html' %}
+
+{% block title %} Note #{{note.id}} - {{ block.super }}{% endblock %}
+
+{% block content %}
+
     <h1>{{ note.header }}</h1>
-    <p>{{ note.body }}</p>
+    <p>{{ note.body | safe }}</p>
     <div>
         <span>Is favorite: {{ note.is_favorite }}</span>
     </div>
@@ -28,5 +26,5 @@
             <input type="hidden" name="note_id" value="{{ note.id }}">
             <button type="submit">UPDATE</button>
         </form>
-</body>
-</html>
+
+{% endblock content %}
