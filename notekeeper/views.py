@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.template import loader
+from django.contrib.auth.views import redirect_to_login
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 
 from .models import Note
 from .forms import NoteForm
@@ -57,10 +60,11 @@ def delete_note(request):
     return HttpResponse("pych")
 
 
+@login_required
 def note_details(request, note_id):
     note = get_object_or_404(Note, id=note_id)
     if not request.user.id == note.created_by.id:
-        return HttpResponse('Forbidden', status=403)
+        return redirect_to_login(reverse('notekeeper:note_details', kwargs={'note_id': note_id}))
     context = {
         "note": note
     }

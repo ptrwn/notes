@@ -4,7 +4,7 @@ from . import views
 app_name = 'notekeeper'
 
 urlpatterns = [
-    path('', views.index, name='index'), #no need?
+    path('', views.index, name='index'),
     path('<int:note_id>/', views.note_details, name='note_details'),
     path('new/', views.create_note, name='create_note'),
     path('delete/', views.delete_note, name='delete_note'),
