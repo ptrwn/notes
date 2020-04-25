@@ -60,6 +60,7 @@ def delete_note(request):
     return HttpResponse("pych")
 
 
+# todo: fix - if note was requested by unauth-ed user, redirect him to login, and then - back to the note!!!
 @login_required
 def note_details(request, note_id):
     note = get_object_or_404(Note, id=note_id)
@@ -96,20 +97,22 @@ def create_note(request):
     return HttpResponse(template.render(context, request))
 
 
-def publish_note(request, note_uuid):
+def view_published_note(request, note_uuid):
     note = get_object_or_404(Note, uuid=note_uuid)
     context = {
         "note": note,
     }
-    template = loader.get_template('notekeeper/publish.html')
+    template = loader.get_template('notekeeper/view_published.html')
     return HttpResponse(template.render(context, request))
 
-
-def login():
-    pass
-
-
-def registration():
-    pass
-
-
+# todo: add update-and-publish and create-and-publish to New note and Update note
+# todo: add unpub option for published notes
+def publish_note(request):
+    if request.method == 'POST':
+        note_id = request.POST['note_id']
+        note = Note.objects.get(id=int(note_id))
+        if not request.user.id == note.created_by.id:
+            return HttpResponse('Forbidden', status=403)
+        note.add_uuid()
+        return redirect('notekeeper:view_published', note_uuid=note.uuid)
+    return HttpResponse("pych")

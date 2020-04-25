@@ -26,7 +26,8 @@
             <input type="hidden" name="note_id" value="{{ note.id }}">
             <button type="submit">UPDATE</button>
         </form>
-        <form method="post" action="{% url 'notekeeper:update_note' note_id=note.id %}" >
+
+        <form method="post" action="{% url 'notekeeper:publish_note' %}" >
             {% csrf_token %}
             <input type="hidden" name="note_id" value="{{ note.id }}">
             <button type="submit"> Publish </button>
