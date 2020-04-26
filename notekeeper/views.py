@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.contrib.auth.views import redirect_to_login
 from django.contrib.auth.decorators import login_required
@@ -60,12 +60,10 @@ def delete_note(request):
     return HttpResponse("pych")
 
 
-# todo: fix - if note was requested by unauth-ed user, redirect him to login, and then - back to the note!!!
-@login_required
 def note_details(request, note_id):
     note = get_object_or_404(Note, id=note_id)
     if not request.user.id == note.created_by.id:
-        return redirect_to_login(reverse('notekeeper:note_details', kwargs={'note_id': note_id}))
+        return redirect_to_login(reverse('notekeeper:note_details', kwargs={'note_id': note_id}), redirect_field_name = 'next')
     context = {
         "note": note
     }
@@ -106,7 +104,7 @@ def view_published_note(request, note_uuid):
     return HttpResponse(template.render(context, request))
 
 # todo: add update-and-publish and create-and-publish to New note and Update note
-# todo: add unpub option for published notes
+# todo: add unpub and reset uuid options for published notes
 def publish_note(request):
     if request.method == 'POST':
         note_id = request.POST['note_id']

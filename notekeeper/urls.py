@@ -2,7 +2,6 @@ from django.urls import path, include
 from . import views
 
 app_name = 'notekeeper'
-
 urlpatterns = [
     path('', views.index, name='index'),
     path('<int:note_id>/', views.note_details, name='note_details'),
