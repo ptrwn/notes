@@ -10,6 +10,8 @@ from .forms import NoteForm
 
 
 def index(request):
+    if not request.user.is_authenticated:
+        return redirect_to_login(reverse('notekeeper:index'), redirect_field_name = 'next')
     own_note_list = Note.objects.filter(created_by=request.user)
     template = loader.get_template('notekeeper/index.html')
     context = {
@@ -104,7 +106,7 @@ def view_published_note(request, note_uuid):
     return HttpResponse(template.render(context, request))
 
 # todo: add update-and-publish and create-and-publish to New note and Update note
-# todo: add unpub and reset uuid options for published notes
+# todo:  ----   add unpub and reset uuid options for published notes
 def publish_note(request):
     if request.method == 'POST':
         note_id = request.POST['note_id']
@@ -113,4 +115,14 @@ def publish_note(request):
             return HttpResponse('Forbidden', status=403)
         note.add_uuid()
         return redirect('notekeeper:view_published', note_uuid=note.uuid)
+    return HttpResponse("pych")
+
+def unpublish_note(request):
+    if request.method == 'POST':
+        note_id = request.POST['note_id']
+        note = Note.objects.get(id=int(note_id))
+        if not request.user.id == note.created_by.id:
+            return HttpResponse('Forbidden', status=403)
+        note.del_uuid()
+        return redirect('notekeeper:note_details', note_id=note.id)
     return HttpResponse("pych")
