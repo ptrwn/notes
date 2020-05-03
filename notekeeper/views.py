@@ -105,8 +105,6 @@ def view_published_note(request, note_uuid):
     template = loader.get_template('notekeeper/view_published.html')
     return HttpResponse(template.render(context, request))
 
-# todo: add update-and-publish and create-and-publish to New note and Update note
-# todo:  ----   add unpub and reset uuid options for published notes
 def publish_note(request):
     if request.method == 'POST':
         note_id = request.POST['note_id']
@@ -126,3 +124,7 @@ def unpublish_note(request):
         note.del_uuid()
         return redirect('notekeeper:note_details', note_id=note.id)
     return HttpResponse("pych")
+
+# todo: modify base template - basic siet design
+# todo: notes list into table - sorts
+# todo: base html - 14 - remove comment OR make some text (rand fun phrase?)

@@ -12,8 +12,3 @@ class NoteForm(ModelForm):
             'is_favorite': CheckboxInput(attrs={'class': 'form-control'}),
             'category': Select(attrs={'class': 'form-control'}),
         }
-
-
-class RegLogForm(ModelForm):
-    class Meta:
-        pass

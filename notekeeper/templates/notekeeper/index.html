@@ -1,21 +1,71 @@
 {% extends 'notekeeper/base.html' %}
 
 {% block title %}My notes - {{ block.super }}{% endblock %}
+{% block home %} {% endblock %}
 
 {% block content %}
-    {% if latest_note_list %}
-    <ul>
-    {% for note in latest_note_list %}
-        <li><a href="{% url 'notekeeper:note_details' note.id %}">{{ note.header }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>Sorry Mario notes are in another castle.</p>
-{% endif %}
 
-    <form method="post" action="{% url 'notekeeper:create_note' %}" >
+ <form method="post" action="{% url 'notekeeper:create_note' %}" >
         {% csrf_token %}
         <input type="hidden" name="note_id" value="{{ note.id }}">
         <button type="submit">NEW NOTE</button>
     </form>
+
+
+    {% if latest_note_list %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 col-xs-12 col-sm-12">
+        <table id="example" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Header</th>
+                    <th>Category</th>
+                    <th>Is fav</th>
+                    <th>Created date</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            {% for note in latest_note_list %}
+            <tr>
+                <td><a href="{% url 'notekeeper:note_details' note.id %}">{{ note.header }}</a></td>
+                <td>{{ note.category }}</td>
+                <td>{{ note.is_favorite }}</td>
+                <td>{{ note.created_on }}</td>
+            </tr>
+            {% endfor %}
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Header</th>
+                    <th>Category</th>
+                    <th>Is fav</th>
+                    <th>Created date</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+  </div>
+</div>
+
+
+    {% else %}
+        <p>Sorry Mario, your notes are in another castle.</p>
+    {% endif %}
+
+
 {% endblock content %}
+
+
+
+
+
+
+
+
+
+
+

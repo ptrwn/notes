@@ -1,33 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>{% block title %}Notekeeper{% endblock %}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function() {
+        $('#example').DataTable();
+    } );
+  </script>
 </head>
 <body>
-    <div id="sidebar">
-        {% block sidebar %}
-        <ul>
-            <li>
-            {% if user.is_authenticated %}
-            You are logged in as {{ user }}.
-            <a href="{% url 'logout' %}">Click here to log out.</a>
-            {% else %}
-            You are not logged in.
-            <a href="{% url 'login' %}">Click here to log in.</a>
-            {% endif %}
-            </li>
-            <li><a href="{% url 'notekeeper:index' %}">My notes</a></li>
 
-        </ul>
-        {% endblock %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="valign bottom col-md-3">
+            <!-- <h3>Welcome to Notekeeper</h3> ---------------------------------------------------------------------->
+                <div id="sidebar">
+                {% block sidebar %}
+                <ul style="list-style-type:none;">
+                    <li>
+                    {% if user.is_authenticated %}
+                    You are logged in as {{ user }}.
+                    <a href="{% url 'logout' %}">Click here to log out.</a>
+                    {% else %}
+                    You are not logged in.
+                    <a href="{% url 'login' %}">Click here to log in.</a>
+                    {% endif %}
+                    </li>
+                    {% block home %}<li><a href="{% url 'notekeeper:index' %}">My notes</a></li>{% endblock %}
+                </ul>
+
+                {% endblock %}
+                </div>
+        </div>
+    <!-- USE IT OR REMOVE IT -- DO I NEED THIS COLUMN HERE? ------------------------------------------------------- -->
+    <div class="col-md-9"></div>
     </div>
 
-    <div id="content">
+    <div class="row">
+         <div id="content">
         {% block content %}{% endblock %}
+         </div>
     </div>
+
+</div>
+
 
 </body>
 </html>
