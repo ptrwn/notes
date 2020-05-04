@@ -125,6 +125,10 @@ def unpublish_note(request):
         return redirect('notekeeper:note_details', note_id=note.id)
     return HttpResponse("pych")
 
-# todo: modify base template - basic siet design
+
+# todo: mod edit note - raspepezheno : (
+# todo: modify base template - basic site design
 # todo: notes list into table - sorts
 # todo: base html - 14 - remove comment OR make some text (rand fun phrase?)
+# todo: make star link: click on yellow - make non-fav; click on black - make fav
+# todo: make published cloumn, same - button un/re publish
