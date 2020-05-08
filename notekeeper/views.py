@@ -44,8 +44,10 @@ def update_note(request, note_id):
         'is_favorite': note.is_favorite,
         'category': note.category
     })
+
     context = {
-        "form": form
+        "form": form,
+        "note": note
     }
     template = loader.get_template('notekeeper/update_note.html')
     return HttpResponse(template.render(context, request))
@@ -124,11 +126,3 @@ def unpublish_note(request):
         note.del_uuid()
         return redirect('notekeeper:note_details', note_id=note.id)
     return HttpResponse("pych")
-
-
-# todo: mod edit note - raspepezheno : (
-# todo: modify base template - basic site design
-# todo: notes list into table - sorts
-# todo: base html - 14 - remove comment OR make some text (rand fun phrase?)
-# todo: make star link: click on yellow - make non-fav; click on black - make fav
-# todo: make published cloumn, same - button un/re publish

@@ -24,7 +24,7 @@
         <form method="post" action="{% url 'notekeeper:update_note' note_id=note.id %}" >
             {% csrf_token %}
             <input type="hidden" name="note_id" value="{{ note.id }}">
-            <button type="submit">UPDATE</button>
+            <button type="submit">EDIT</button>
         </form>
 
         {% if note.uuid %}
@@ -33,17 +33,21 @@
                 <input type="hidden" name="note_id" value="{{ note.id }}">
                 <button type="submit"> Unpublish </button>
             </form>
+
             <form method="post" action="{% url 'notekeeper:publish_note' %}" >
                 {% csrf_token %}
                 <input type="hidden" name="note_id" value="{{ note.id }}">
                 <button type="submit"> Reset UUID </button>
             </form>
+
         {% else %}
+
             <form method="post" action="{% url 'notekeeper:publish_note' %}" >
                 {% csrf_token %}
                 <input type="hidden" name="note_id" value="{{ note.id }}">
                 <button type="submit"> Publish </button>
             </form>
+
         {% endif %}
 
 

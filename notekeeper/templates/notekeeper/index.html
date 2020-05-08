@@ -23,6 +23,7 @@
                     <th>Header</th>
                     <th>Category</th>
                     <th>Is fav</th>
+                    <th>Is public</th>
                     <th>Created date</th>
                 </tr>
             </thead>
@@ -32,13 +33,22 @@
             <tr>
                 <td><a href="{% url 'notekeeper:note_details' note.id %}">{{ note.header }}</a></td>
                 <td>{{ note.category }}</td>
+
                 <td>
                     {% if note.is_favorite %}
                     <p><span class="glyphicon glyphicon-star" style="color:orange"></span></p>
+                    <a href="#"><span class="glyphicon glyphicon-envelope" style="color:orange"></span></a>
                     {% endif %}
 
                 </td>
 
+                <td>{% if note.uuid %}
+                    <p> button to repub or unpub </p>
+                    {% else %}
+                    <p> button to pub </p>
+                    {% endif %}
+
+                </td>
 
 
                 <td>{{ note.created_on }}</td>
@@ -51,6 +61,7 @@
                     <th>Header</th>
                     <th>Category</th>
                     <th>Is fav</th>
+                    <th>Is public</th>
                     <th>Created date</th>
                 </tr>
             </tfoot>

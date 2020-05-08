@@ -5,7 +5,10 @@
     <div class="form-group">
     <form action={% url 'notekeeper:create_note' %} method="post">
         {% csrf_token %}
-        {{ form }}
+
+        <table>
+            {{ form.as_table }}
+        </table>
         <br>
         <input class="btn" type="submit" value="Submit">
     </form>

@@ -2,10 +2,17 @@
 
 {% block content %}
 
-    <form method="post">
+<div class="container">
+    <div class="form-group">
+    <form action={% url 'notekeeper:create_note' %} method="post">
         {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Submit">
+        <table>
+            {{ form.as_table }}
+        </table>
+        <br>
+        <input class="btn" type="submit" value="Submit">
     </form>
+    </div>
+</div>
 
 {% endblock content %}
