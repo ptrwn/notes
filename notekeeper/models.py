@@ -32,3 +32,13 @@ class Note(models.Model):
         self.uuid = None
         self.save()
 
+    # def make_favorite(self):
+    #     self.is_favorite = True
+    #     self.save()
+    #     return self.is_favorite
+    #
+    # def make_not_favorite(self):
+    #     self.is_favorite = False
+    #     self.save()
+    #     return self.is_favorite
+

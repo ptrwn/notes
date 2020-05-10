@@ -4,51 +4,57 @@
 
 {% block content %}
 
-    <h1>{{ note.header }}</h1>
+<div class="btn-toolbar" role="toolbar" aria-label="...">
+
+    <form method="post" action="{% url 'notekeeper:delete_note' %}">
+        {% csrf_token %}
+        <input type="hidden" name="note_id" value="{{ note.id }}">
+        <button type="submit" class="btn btn-default">DELETE</button>
+    </form>
+
+    <form method="post" action="{% url 'notekeeper:update_note' note_id=note.id %}" >
+        {% csrf_token %}
+        <input type="hidden" name="note_id" value="{{ note.id }}">
+        <button type="submit" class="btn btn-default">EDIT</button>
+    </form>
+
+    {% if note.uuid %}
+
+    <form method="post" action="{% url 'notekeeper:unpublish' %}" >
+        {% csrf_token %}
+        <input type="hidden" name="note_id" value="{{ note.id }}">
+        <button type="submit" class="btn btn-default"> Unpublish </button>
+    </form>
+
+    <form method="post" action="{% url 'notekeeper:publish_note' %}" >
+        {% csrf_token %}
+        <input type="hidden" name="note_id" value="{{ note.id }}">
+        <button type="submit" class="btn btn-default"> Reset UUID </button>
+    </form>
+
+    {% else %}
+
+    <form method="post" action="{% url 'notekeeper:publish_note' %}" >
+        {% csrf_token %}
+        <input type="hidden" name="note_id" value="{{ note.id }}">
+        <button type="submit" class="btn btn-default"> Publish </button>
+    </form>
+
+    {% endif %}
+
+</div>
+
+
+<div class="blog-post" style="word-wrap: break-word";>
+        <h2 class="blog-post-title">{{ note.header }}</h2>
+        <p class="blog-post-meta">
+            {% if note.is_favorite %}<span class="glyphicon glyphicon-star" style="color:orange"></span>{% endif %}
+            {{ note.created_on }} by {{ note.created_by }}
+        </p>
+
     <p>{{ note.body | safe }}</p>
-    <div>
-        <span>Is favorite: {{ note.is_favorite }}</span>
-    </div>
-    <div>
-        <span>Author: {{ note.created_by }}</span>
-    </div>
-    <div>
-        <span>Created on: {{ note.created_on }}</span>
-    </div>
-        <form method="post" action="{% url 'notekeeper:delete_note' %}" >
-            {% csrf_token %}
-            <input type="hidden" name="note_id" value="{{ note.id }}">
-            <button type="submit">DELETE</button>
-        </form>
 
-        <form method="post" action="{% url 'notekeeper:update_note' note_id=note.id %}" >
-            {% csrf_token %}
-            <input type="hidden" name="note_id" value="{{ note.id }}">
-            <button type="submit">EDIT</button>
-        </form>
-
-        {% if note.uuid %}
-            <form method="post" action="{% url 'notekeeper:unpublish' %}" >
-                {% csrf_token %}
-                <input type="hidden" name="note_id" value="{{ note.id }}">
-                <button type="submit"> Unpublish </button>
-            </form>
-
-            <form method="post" action="{% url 'notekeeper:publish_note' %}" >
-                {% csrf_token %}
-                <input type="hidden" name="note_id" value="{{ note.id }}">
-                <button type="submit"> Reset UUID </button>
-            </form>
-
-        {% else %}
-
-            <form method="post" action="{% url 'notekeeper:publish_note' %}" >
-                {% csrf_token %}
-                <input type="hidden" name="note_id" value="{{ note.id }}">
-                <button type="submit"> Publish </button>
-            </form>
-
-        {% endif %}
+</div>
 
 
 {% endblock content %}

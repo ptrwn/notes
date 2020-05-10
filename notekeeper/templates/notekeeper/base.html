@@ -19,39 +19,37 @@
 </head>
 <body>
 
-<div class="container-fluid">
+<div class="container-fluid" style="padding-top: 25px;">
     <div class="row">
-        <div class="valign bottom col-md-3">
-            <!-- <h3>Welcome to Notekeeper</h3> ---------------------------------------------------------------------->
+        <div class="valign bottom col-md-2">
                 <div id="sidebar">
                 {% block sidebar %}
-                <ul style="list-style-type:none;">
+                <ul class="nav nav-pills nav-stacked">
                     <li>
                     {% if user.is_authenticated %}
-                    You are logged in as {{ user }}.
-                    <a href="{% url 'logout' %}">Click here to log out.</a>
+                    <a href="{% url 'logout' %}">Log out</a>
                     {% else %}
                     You are not logged in.
-                    <a href="{% url 'login' %}">Click here to log in.</a>
+                    <a href="{% url 'login' %}">Click here to log in</a>
                     {% endif %}
                     </li>
                     {% block home %}<li><a href="{% url 'notekeeper:index' %}">My notes</a></li>{% endblock %}
+                    <li>{% block newnote %}{% endblock %}</li>
                 </ul>
 
                 {% endblock %}
                 </div>
         </div>
-    <!-- USE IT OR REMOVE IT -- DO I NEED THIS COLUMN HERE? ------------------------------------------------------- -->
-    <div class="col-md-9"></div>
+    <div class="col-md-8">
+
+        <div class="row">
+             <div id="content">
+            {% block content %}{% endblock %}
+             </div>
+        </div>
     </div>
 
-    <div class="row">
-         <div id="content">
-        {% block content %}{% endblock %}
-         </div>
-    </div>
-
-</div>
+    <div class="col-md-2"></div>
 
 
 </body>

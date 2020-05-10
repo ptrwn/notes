@@ -2,14 +2,16 @@
 
 {% block title %}My notes - {{ block.super }}{% endblock %}
 {% block home %} {% endblock %}
+{% block newnote %}
+
+<a href="{% url 'notekeeper:create_note' %}">New note</a>
+
+{% endblock %}
+
 
 {% block content %}
 
- <form method="post" action="{% url 'notekeeper:create_note' %}" >
-        {% csrf_token %}
-        <input type="hidden" name="note_id" value="{{ note.id }}">
-        <button type="submit">NEW NOTE</button>
-    </form>
+
 
 
     {% if latest_note_list %}
@@ -37,15 +39,12 @@
                 <td>
                     {% if note.is_favorite %}
                     <p><span class="glyphicon glyphicon-star" style="color:orange"></span></p>
-                    <a href="#"><span class="glyphicon glyphicon-envelope" style="color:orange"></span></a>
                     {% endif %}
 
                 </td>
 
                 <td>{% if note.uuid %}
-                    <p> button to repub or unpub </p>
-                    {% else %}
-                    <p> button to pub </p>
+                    <p><span class="glyphicon glyphicon-ok" style="color:green"></span></p>
                     {% endif %}
 
                 </td>

@@ -5,39 +5,21 @@
 {% block sidebar %}{% endblock sidebar%}
 
 {% block content %}
-    <div class="container-fluid">
 
-      <div class="row">
-        <div class="col-sm-6">
-        <h1>{{ note.header }}</h1>
-        </div>
-      </div>
+<div class="blog-post" style="word-wrap: break-word";>
+        <h2 class="blog-post-title">{{ note.header }}</h2>
+        <p class="blog-post-meta">
+            {% if note.is_favorite %}<span class="glyphicon glyphicon-star" style="color:orange"></span>{% endif %}
+            {{ note.created_on }} by {{ note.created_by }}
+        </p>
 
-     <div class="row">
-        <div class="col-sm-6">
-          <p>{{ note.body }}</p>
-        </div>
-     </div>
-
-     <div class="row">
-        <div class="col-sm-6">
-          <p>{{ note.is_favorite }}</p>
-        </div>
-     </div>
-
-    <div class="row">
-        <div class="col-sm-6">
-            <span>Author: {{ note.created_by }}</span>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-6">
-            <span>Created on: {{ note.created_on }}</span>
-        </div>
-    </div>
+    <p>{{ note.body | safe }}</p>
 
 </div>
+
+
+
+
 
 
 {% endblock content %}

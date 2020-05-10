@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="form-group">
-    <form action={% url 'notekeeper:create_note' %} method="post">
+    <form action={% url 'notekeeper:update_note' note.id %} method="post">
         {% csrf_token %}
         <table>
             {{ form.as_table }}
