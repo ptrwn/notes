@@ -1,20 +1,22 @@
 {% extends 'notekeeper/base.html' %}
 
 {% block title %}My notes - {{ block.super }}{% endblock %}
+
 {% block home %} {% endblock %}
+
 {% block newnote %}
+    <a href="{% url 'notekeeper:create_note' %}">New note</a>
+{% endblock %}
 
-<a href="{% url 'notekeeper:create_note' %}">New note</a>
-
+{% block newcat %}
+    <a href="{% url 'notekeeper:add_category' %}">Add category</a>
 {% endblock %}
 
 
 {% block content %}
 
 
-
-
-    {% if latest_note_list %}
+{% if latest_note_list %}
 
 <div class="container">
   <div class="row">

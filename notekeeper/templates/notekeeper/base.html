@@ -35,6 +35,7 @@
                     </li>
                     {% block home %}<li><a href="{% url 'notekeeper:index' %}">My notes</a></li>{% endblock %}
                     <li>{% block newnote %}{% endblock %}</li>
+                    <li>{% block newcat %}{% endblock %}</li>
                 </ul>
 
                 {% endblock %}

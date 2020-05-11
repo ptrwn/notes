@@ -10,6 +10,8 @@ urlpatterns = [
     path('pub/', views.publish_note, name='publish_note'),
     path('update/<int:note_id>/', views.update_note, name='update_note'),
     path('<uuid:note_uuid>', views.view_published_note, name='view_published'),
-    path('del_uuid>', views.unpublish_note, name='unpublish'),
+    path('del_uuid', views.unpublish_note, name='unpublish'),
+    path('newcat/', views.add_cat, name='add_category'),
+    path('register/', views.signup_view, name='reg'),
 ]
 

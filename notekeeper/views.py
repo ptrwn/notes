@@ -5,8 +5,28 @@ from django.contrib.auth.views import redirect_to_login
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
-from .models import Note
-from .forms import NoteForm
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
+
+from .models import Note, Category
+from .forms import NoteForm, CategoryForm
+
+
+
+def signup_view(request):
+    form = UserCreationForm(request.POST)
+    if form.is_valid():
+        form.save()
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password1')
+        user = authenticate(username=username, password=password)
+        login(request, user)
+        return redirect('notekeeper:index')
+    context = { "form": form, }
+    template = loader.get_template('notekeeper/signup.html')
+    return HttpResponse(template.render(context, request))
+
+
 
 
 def index(request):
@@ -38,6 +58,7 @@ def update_note(request, note_id):
             updated_note.save()
             return redirect('notekeeper:note_details', note_id=updated_note.id)
 
+
     form = NoteForm(initial={
         'header': note.header,
         'body': note.body,
@@ -53,6 +74,24 @@ def update_note(request, note_id):
     return HttpResponse(template.render(context, request))
 
 
+def add_cat(request):
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return HttpResponse('Unauthorized', status=401)
+
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            new_cat = Category.objects.create(name=form.cleaned_data['name'])
+            return redirect('notekeeper:index')
+
+    form = CategoryForm()
+    context = {
+        "form": form
+    }
+    template = loader.get_template('notekeeper/newcat.html')
+    return HttpResponse(template.render(context, request))
+
+
 def delete_note(request):
     if request.method == 'POST':
         note_id = request.POST['note_id']
@@ -62,6 +101,7 @@ def delete_note(request):
         note.delete()
         return redirect('notekeeper:index')
     return HttpResponse("pych")
+
 
 
 def note_details(request, note_id):

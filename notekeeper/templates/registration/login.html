@@ -11,3 +11,10 @@
 </form>
 
 
+<form method="post" action="{% url 'notekeeper:reg' %}">
+{% csrf_token %}
+{{ form.as_p }}
+
+<input type="hidden" name="next" value="{% url 'notekeeper:reg' %}"/>
+<input type="submit" value="register" />
+</form>
