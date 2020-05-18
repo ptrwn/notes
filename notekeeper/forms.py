@@ -9,6 +9,9 @@ class CategoryForm(ModelForm):
         model = Category
         fields = ['name']
         widgets = {'name': TextInput(),}
+        error_messages = {
+            'name': {
+                'unique': _("This category already exists, must be unique."), }}
 
 
 class NoteForm(ModelForm):

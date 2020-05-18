@@ -12,7 +12,6 @@ from .models import Note, Category
 from .forms import NoteForm, CategoryForm
 
 
-
 def signup_view(request):
     form = UserCreationForm(request.POST)
     if form.is_valid():
@@ -22,11 +21,9 @@ def signup_view(request):
         user = authenticate(username=username, password=password)
         login(request, user)
         return redirect('notekeeper:index')
-    context = { "form": form, }
+    context = {"form": form, }
     template = loader.get_template('notekeeper/signup.html')
     return HttpResponse(template.render(context, request))
-
-
 
 
 def index(request):
@@ -58,7 +55,6 @@ def update_note(request, note_id):
             updated_note.save()
             return redirect('notekeeper:note_details', note_id=updated_note.id)
 
-
     form = NoteForm(initial={
         'header': note.header,
         'body': note.body,
@@ -82,9 +78,14 @@ def add_cat(request):
         form = CategoryForm(request.POST)
         if form.is_valid():
             new_cat = Category.objects.create(name=form.cleaned_data['name'])
+            new_cat.save()
             return redirect('notekeeper:index')
+        else:
+            print(form.errors)
 
-    form = CategoryForm()
+    else:
+        form = CategoryForm()
+
     context = {
         "form": form
     }
@@ -147,6 +148,7 @@ def view_published_note(request, note_uuid):
     template = loader.get_template('notekeeper/view_published.html')
     return HttpResponse(template.render(context, request))
 
+
 def publish_note(request):
     if request.method == 'POST':
         note_id = request.POST['note_id']
@@ -156,6 +158,7 @@ def publish_note(request):
         note.add_uuid()
         return redirect('notekeeper:view_published', note_uuid=note.uuid)
     return HttpResponse("pych")
+
 
 def unpublish_note(request):
     if request.method == 'POST':

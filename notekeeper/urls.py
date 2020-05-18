@@ -13,5 +13,6 @@ urlpatterns = [
     path('del_uuid', views.unpublish_note, name='unpublish'),
     path('newcat/', views.add_cat, name='add_category'),
     path('register/', views.signup_view, name='reg'),
+    #path('get-notes/', ),  # return notes as JSON
 ]
 
