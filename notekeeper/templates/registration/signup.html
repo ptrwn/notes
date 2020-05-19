@@ -1,4 +1,5 @@
 <h2>Sign up Form</h2>
+
 <form method="post">
   {% csrf_token %}
   {% for field in form %}
@@ -15,3 +16,5 @@
   {% endfor %}
   <button type="submit">Sign up</button>
 </form>
+
+<p> Already have an account? Come back to <a href="{% url 'login' %}">login</a> </p>

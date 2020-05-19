@@ -22,27 +22,25 @@ def signup_view(request):
         login(request, user)
         return redirect('notekeeper:index')
     context = {"form": form, }
-    template = loader.get_template('notekeeper/signup.html')
+    template = loader.get_template('registration/signup.html')
     return HttpResponse(template.render(context, request))
 
 
 def index(request):
     if not request.user.is_authenticated:
-        return redirect_to_login(reverse('notekeeper:index'), redirect_field_name = 'next')
+        return redirect_to_login(reverse('notekeeper:index'), redirect_field_name='next')
     own_note_list = Note.objects.filter(created_by=request.user)
     template = loader.get_template('notekeeper/index.html')
     context = {
         "latest_note_list": own_note_list
     }
-
     return HttpResponse(template.render(context, request))
 
 
 def update_note(request, note_id):
     note = get_object_or_404(Note, id=note_id)
     if not request.user.id == note.created_by.id:
-        return HttpResponse('Forbidden', status=403)
-
+        return redirect_to_login(reverse('notekeeper:update_note', kwargs={'note_id': note_id}), redirect_field_name = 'next')
     if request.method == 'POST':
         form = NoteForm(request.POST)
         if form.is_valid():
@@ -51,7 +49,6 @@ def update_note(request, note_id):
             updated_note.body = form.cleaned_data['body']
             updated_note.is_favorite = form.cleaned_data['is_favorite']
             updated_note.category = form.cleaned_data['category']
-
             updated_note.save()
             return redirect('notekeeper:note_details', note_id=updated_note.id)
 
@@ -71,10 +68,9 @@ def update_note(request, note_id):
 
 
 def add_cat(request):
+    if not request.user.is_authenticated:
+        return redirect_to_login(reverse('notekeeper:index'), redirect_field_name='next')
     if request.method == 'POST':
-        if not request.user.is_authenticated:
-            return HttpResponse('Unauthorized', status=401)
-
         form = CategoryForm(request.POST)
         if form.is_valid():
             new_cat = Category.objects.create(name=form.cleaned_data['name'])
@@ -101,8 +97,7 @@ def delete_note(request):
             return HttpResponse('Forbidden', status=403)
         note.delete()
         return redirect('notekeeper:index')
-    return HttpResponse("pych")
-
+    return redirect('notekeeper:index')
 
 
 def note_details(request, note_id):
@@ -117,10 +112,9 @@ def note_details(request, note_id):
 
 
 def create_note(request):
+    if not request.user.is_authenticated:
+        return redirect_to_login(reverse('notekeeper:create_note'), redirect_field_name='next')
     if request.method == 'POST':
-        if not request.user.is_authenticated:
-            return HttpResponse('Unauthorized', status=401)
-
         form = NoteForm(request.POST)
         if form.is_valid():
             new_note = Note.objects.create(
@@ -157,7 +151,7 @@ def publish_note(request):
             return HttpResponse('Forbidden', status=403)
         note.add_uuid()
         return redirect('notekeeper:view_published', note_uuid=note.uuid)
-    return HttpResponse("pych")
+    return redirect('notekeeper:index')
 
 
 def unpublish_note(request):
@@ -168,4 +162,4 @@ def unpublish_note(request):
             return HttpResponse('Forbidden', status=403)
         note.del_uuid()
         return redirect('notekeeper:note_details', note_id=note.id)
-    return HttpResponse("pych")
+    return redirect('notekeeper:index')

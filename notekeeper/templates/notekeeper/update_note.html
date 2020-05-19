@@ -3,7 +3,6 @@
 {% block content %}
 
 <div class="container">
-    <p>the current form</p>
     <div class="form-group">
     <form action={% url 'notekeeper:update_note' note.id %} method="post">
         {% csrf_token %}

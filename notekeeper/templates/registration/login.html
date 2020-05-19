@@ -1,7 +1,3 @@
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
-
 <form method="post" action="{% url 'login' %}">
 {% csrf_token %}
 {{ form.as_p }}
@@ -9,14 +5,13 @@
 <input type="hidden" name="next" value="{{ request.GET.next }}"/>
 <input type="submit" value="login" />
 
-
 </form>
 
+<p> No account yet? Sign up <a href="{% url 'notekeeper:reg' %}">here</a> </p>
 
-<form method="post" action="{% url 'notekeeper:reg' %}">
-{% csrf_token %}
-{{ form.as_p }}
 
-<input type="hidden" name="next" value="{% url 'notekeeper:reg' %}"/>
-<input type="submit" value="register" />
-</form>
+
+
+
+
+
