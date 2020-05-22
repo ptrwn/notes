@@ -5,7 +5,7 @@ App to store and manage notes
 
 ```
 1. Create virtual environment
-2. In the vistual environment, run:
+2. In the virtual environment, run:
 pip install requirements.txt
 3. Run migration:
 python manage.py migrate
